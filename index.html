@@ -52,6 +52,13 @@
 
         // function to determine computer choice
         function computerPlay() {
+            let computerOption = ['rock', 'paper', 'scissors'];
+            let x = computerOption[Math.floor(Math.random() * computerOption.length)];
+            return x;
+        }
+
+/*
+        function computerPlay() {
             let x = Math.floor(Math.random() * 3)
             switch (x) {
                 case 0:
@@ -64,7 +71,7 @@
                     return "scissors";
                     break;
             }
-        };
+        }; */
 
         //function to check player input
         function checkPlayer(str) {
