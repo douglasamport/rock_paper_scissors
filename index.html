@@ -7,7 +7,7 @@
 
     <title>Rock Paper Scissors</title>
     <meta name="Rock Paper Scissors project" content="For the odin project">
-    <meta name="douglas.amport" content="tic Tac toe">
+    <meta name="douglas.amport" content="Rock Paper Scissors">
 
     <style></style>
 </head>
@@ -19,6 +19,65 @@
 
     <script>
 
+        function game() {
+            //ini scoring variables
+            let tie = 0;
+            let playerWins = 0;
+            let computerWins = 0;
+            //ini game count
+            let i = 5;
+            //play five games
+            alert(`We\'ll play 'best of five'`)
+            while (i > 0) {
+                //get the output from each game
+                let msgRound = singleRound()
+                //store wins in variable
+                if (msgRound.match(/win/i)) {
+                    playerWins++;
+                }
+                //store losses in variable
+                else if (msgRound.match(/lose/i)) {
+                    computerWins++;
+                }
+                //store ties in variable
+                else if (msgRound.match(/tie/i)) {
+                    tie++;
+                }
+                //update the variables and output 
+                let msgUpdate = `${msgRound} 
+                    Current score is..
+                    Player: ${playerWins} 
+                    Computer: ${computerWins} 
+                    Ties: ${tie}
+                    ${i - 1} rounds to go.`
+
+                alert(msgUpdate)
+                i--
+            }
+
+            let msgFinal = finalCount(computerWins, playerWins)
+            alert(`${msgFinal}
+                    Player: ${playerWins} 
+                    Computer: ${computerWins} 
+                    Ties: ${tie}`);
+            return `${msgFinal}
+                    Player: ${playerWins} 
+                    Computer: ${computerWins} 
+                    Ties: ${tie}`;
+        }
+
+        function finalCount(computer, player) {
+            if (computer === player) {
+                return `Tie!  Final score is..`
+            }
+            else if (computer > player) {
+                return `You Lose!  Final score is..`
+            }
+            else {
+                return `You Win!  Final score is..`
+            }
+        }
+
         function singleRound() {
             //Request input from user and  assign user input to variable 
             let playerSelection = prompt('Let\'s play. Please enter "Rock, Paper or Scissors"');
@@ -26,24 +85,24 @@
             let computerSelection = computerPlay();
 
             //check value of variables
-            console.log(`computer:  ${computerSelection}`);
-            console.log(`player: ${playerSelection}`);
+            //console.log(`computer:  ${computerSelection}`);
+            //console.log(`player: ${playerSelection}`);
 
             //verify valid playerSelection
             playerSelection = checkPlayer(playerSelection);
 
             // re-check variables
-            console.log('after checker')
-            console.log(`computer:  ${computerSelection}`);
-            console.log(`player: ${playerSelection}`);
+            //console.log('after checker')
+            //console.log(`computer:  ${computerSelection}`);
+            //console.log(`player: ${playerSelection}`);
 
             //match case of computerSelection
             playerSelection = playerSelection.toLowerCase()
 
             // re-check variables
-            console.log('final')
-            console.log(`computer:  ${computerSelection}`);
-            console.log(`player: ${playerSelection}`);
+            //console.log('final')
+            //console.log(`computer:  ${computerSelection}`);
+            //console.log(`player: ${playerSelection}`);
 
             //compare the variables - tie or declare winner
             let msg = decideWinner(computerSelection, playerSelection);
@@ -57,21 +116,7 @@
             return x;
         }
 
-/*
-        function computerPlay() {
-            let x = Math.floor(Math.random() * 3)
-            switch (x) {
-                case 0:
-                    return "rock";
-                    break;
-                case 1:
-                    return "paper";
-                    break;
-                case 2:
-                    return "scissors";
-                    break;
-            }
-        }; */
+       
 
         //function to check player input
         function checkPlayer(str) {
@@ -97,32 +142,32 @@
             //player victories 
             if (player === 'paper' &
                 computer === 'rock') {
-                return `You Win! ${player} covers ${computer}`;
+                return `You Win! ${player} covers ${computer}. `;
             }
             if (player === 'rock' &
                 computer === 'scissors') {
-                return `You Win! ${player} crushes ${computer}`;
+                return `You Win! ${player} crushes ${computer}. `;
             }
             if (player === 'scissors' &
                 computer === 'paper') {
-                return `You Win! ${player} cuts ${computer}`;
+                return `You Win! ${player} cuts ${computer}. `;
             }
             //computer victories
             if (computer === 'paper' &
                 player === 'rock') {
-                return `You Lose! ${computer} covers ${player}`
+                return `You Lose! ${computer} covers ${player}. `
             }
             if (computer === 'rock' &
                 player === 'scissors') {
-                return `You Lose! ${computer} crushes ${player}`
+                return `You Lose! ${computer} crushes ${player}. `
             }
             if (computer === 'scissors' &
                 player === 'paper') {
-                return `You Lose! ${computer} cuts ${player}`
+                return `You Lose! ${computer} cuts ${player}. `
             }
             //tie
             else {
-                return 'It\'s a tie!'
+                return 'It\'s a tie! '
             }
         }
 

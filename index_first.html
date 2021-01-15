@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Rock Paper Scissors</title>
+    <meta name="Rock Paper Scissors project" content="For the odin project">
+    <meta name="douglas.amport" content="tic Tac toe">
+
+    <style></style>
+</head>
+
+<body>
+    <main>
+
+    </main>
+
+    <script>
+
+        function singleRound() {
+            //Request input from user and  assign user input to variable 
+            let playerSelection = prompt('Let\'s play. Please enter "Rock, Paper or Scissors"');
+            // assign computer choice to variable
+            let computerSelection = computerPlay();
+
+            //check value of variables
+            console.log(`computer:  ${computerSelection}`);
+            console.log(`player: ${playerSelection}`);
+
+            //verify valid playerSelection
+            playerSelection = checkPlayer(playerSelection);
+
+            // re-check variables
+            console.log('after checker')
+            console.log(`computer:  ${computerSelection}`);
+            console.log(`player: ${playerSelection}`);
+
+            //match case of computerSelection
+            playerSelection = playerSelection.toLowerCase()
+
+            // re-check variables
+            console.log('final')
+            console.log(`computer:  ${computerSelection}`);
+            console.log(`player: ${playerSelection}`);
+
+            //compare the variables - tie or declare winner
+            let msg = decideWinner(computerSelection, playerSelection);
+            return msg;
+        }
+
+        // function to determine computer choice
+        function computerPlay() {
+            let computerOption = ['rock', 'paper', 'scissors'];
+            let x = computerOption[Math.floor(Math.random() * computerOption.length)];
+            return x;
+        }
+
+/*
+        function computerPlay() {
+            let x = Math.floor(Math.random() * 3)
+            switch (x) {
+                case 0:
+                    return "rock";
+                    break;
+                case 1:
+                    return "paper";
+                    break;
+                case 2:
+                    return "scissors";
+                    break;
+            }
+        }; */
+
+        //function to check player input
+        function checkPlayer(str) {
+            let value = false;
+            if (str.match(/^rock$/i) ||
+                str.match(/^paper$/i) ||
+                str.match(/^scissors$/i)) {
+                return str;
+            }
+            else {
+                while (!value) {
+                    str = prompt('That\'s not an option! Please enter "Rock, Paper or Scissors".')
+                    if (str.match(/^rock$/i) ||
+                        str.match(/^paper$/i) ||
+                        str.match(/^scissors$/i)) { value = true };
+                }
+            }
+            return str
+        }
+
+        //function that determines winner
+        function decideWinner(computer, player) {
+            //player victories 
+            if (player === 'paper' &
+                computer === 'rock') {
+                return `You Win! ${player} covers ${computer}`;
+            }
+            if (player === 'rock' &
+                computer === 'scissors') {
+                return `You Win! ${player} crushes ${computer}`;
+            }
+            if (player === 'scissors' &
+                computer === 'paper') {
+                return `You Win! ${player} cuts ${computer}`;
+            }
+            //computer victories
+            if (computer === 'paper' &
+                player === 'rock') {
+                return `You Lose! ${computer} covers ${player}`
+            }
+            if (computer === 'rock' &
+                player === 'scissors') {
+                return `You Lose! ${computer} crushes ${player}`
+            }
+            if (computer === 'scissors' &
+                player === 'paper') {
+                return `You Lose! ${computer} cuts ${player}`
+            }
+            //tie
+            else {
+                return 'It\'s a tie!'
+            }
+        }
+
+    </script>
+</body>
+
+</html>
