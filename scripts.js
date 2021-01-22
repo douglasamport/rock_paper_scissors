@@ -6,43 +6,64 @@ const paraFinal = document.querySelector('#final-msg');
 const paraPlayerScore = document.querySelector('#player-score');
 const paraCompScore = document.querySelector('#computer-score');
 const message = document.querySelector('#message');
+const countdown = document.querySelector('#countdown');
+const time = 400;
 
 let tie = 0;
 let playerWins = 0;
 let computerWins = 0;
 
-rock.addEventListener('click', game);
-paper.addEventListener('click', game);
-scissors.addEventListener('click', game);
-
-
-function resetTotal() {
-    console.log('this button works')
+function addLisnteners() {
     rock.addEventListener('click', game);
     paper.addEventListener('click', game);
     scissors.addEventListener('click', game);
+}
+addLisnteners();
+
+async function counterShoot() {
+    const timer = ms => new Promise(res => setTimeout(res, ms));
+      let i = 3;
+      while (i >= 0) {
+          countdown.textContent = i;
+          await timer(time);
+          i--;
+        if (i === 0) {
+            countdown.textContent = "shoot!";
+          i--;
+        }
+       
+      }
+   }
+
+function clearGlobals() {
     message.textContent = '';
     paraFinal.textContent = '';
     paraPlayerScore.textContent = '';
     paraCompScore.textContent = '';
+    countdown.textContent = '';
     playerWins = 0;
     computerWins = 0;
     tie = 0;
-    let headerDiv = document.getElementById("header-div");
-    let btnReset = document.getElementById("btnReset")
-    headerDiv.removeChild(btnReset);
 }
 
+function removeChildById(parentId, childId) {
+    let parent = document.getElementById(parentId);
+    let child = document.getElementById(childId);
+    parent.removeChild(child);
+}
+
+function resetTotal() {
+    addLisnteners();
+    clearGlobals();
+    removeChildById("header-div", "btnReset");
+}
 
 function game(play) {
-    
     let computerPlay = determineComputerPlay();
-    let msgRound = singleRound(this.name, computerPlay);
+    let msgRound = decideWinner(this.name, computerPlay);
     
-    message.textContent = `Player: ${this.name} Computer: ${computerPlay} 
-${msgRound}`;
-
-    //console.log(message.textContent)
+    counterShoot();
+    
     if (msgRound.match(/win/i)) {
         playerWins++;
     }
@@ -54,48 +75,46 @@ ${msgRound}`;
     }
     
     let finalMsg = finalCount(computerWins, playerWins);
-    paraFinal.textContent = `${finalMsg}`;
-    paraPlayerScore.textContent = `Player: ${playerWins}`;
-    paraCompScore.textContent = `Computer: ${computerWins}`;
     
-    resetSetup(computerWins, playerWins)
+    setTimeout(() => {
+        message.textContent = `Player: ${this.name}     Computer: ${computerPlay} 
+    ${msgRound}`; 
+        paraFinal.textContent = `${finalMsg}`;
+        paraPlayerScore.innerHTML = `Player: ${playerWins}`;
+        paraCompScore.textContent = `Computer: ${computerWins}`;
+        resetSetup(computerWins, playerWins);
+    }, time*3);
+}
+
+function removeListeners() {
+    rock.removeEventListener('click', game);
+    paper.removeEventListener('click', game);
+    scissors.removeEventListener('click', game);
 }
 
 function resetSetup(computerWins, playerWins) {
     if (computerWins === 5 || playerWins === 5) {
-        rock.removeEventListener('click', game);
-        paper.removeEventListener('click', game);
-        scissors.removeEventListener('click', game);
+        removeListeners();
         let btnReset = document.createElement("button");
         btnReset.innerText = "Reset";
         btnReset.classList.add('full-width');
-        btnReset.id = "btnReset"
+        btnReset.id = "btnReset";
         let headerDiv = document.getElementById("header-div");
         headerDiv.appendChild(btnReset);
-        btnReset.addEventListener('click', resetTotal)
+        btnReset.addEventListener('click', resetTotal);
     }
 }
 
 function finalCount(computer, player) {
     if (computer === 5) {
-        return `You Lose the Game!`
+        return `You Lose the Game!`;
     }
     else if (player === 5) {
-        return `You Win the Game!`
+        return `You Win the Game!`;
     }
     else {
         return '';
     }
-}
-
-function singleRound(play, computer) {
-    let playerSelection = play;
-    let computerSelection = computer;
-//    console.log(computerSelection)
-//    console.log(playerSelection)
-    let msg = decideWinner(computerSelection, playerSelection);
-//    console.log(msg)
-    return msg ;
 }
 
 function determineComputerPlay() {
@@ -104,7 +123,7 @@ function determineComputerPlay() {
     return x;
 }
 
-function decideWinner(computer, player) {
+function decideWinner(player, computer) {
     if (player === 'paper' &
         computer === 'rock') {
         return `You Win this round! ${player} covers ${computer}. `;
@@ -119,17 +138,17 @@ function decideWinner(computer, player) {
     }
     if (computer === 'paper' &
         player === 'rock') {
-        return `You Lose this round! ${computer} covers ${player}. `
+        return `You Lose this round! ${computer} covers ${player}. `;
     }
     if (computer === 'rock' &
         player === 'scissors') {
-        return `You Lose this round! ${computer} crushes ${player}. `
+        return `You Lose this round! ${computer} crushes ${player}. `;
     }
     if (computer === 'scissors' &
         player === 'paper') {
-        return `You Lose this round! ${computer} cuts ${player}. `
+        return `You Lose this round! ${computer} cuts ${player}. `;
     }
     else {
-        return 'It\'s a tie! '
+        return 'It\'s a tie!';
     }
 }
