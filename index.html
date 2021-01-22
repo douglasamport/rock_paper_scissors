@@ -8,134 +8,54 @@
   <title>Rock Paper Scissors</title>
   <meta name="Rock Paper Scissors project" content="For the odin project">
   <meta name="douglas.amport" content="Rock Paper Scissors">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  
+  
   <style></style>
 </head>
 
 <body>
-  <main>
+  <div class="container ">
+    <div class="row twelve columns ">
+      
+      <div  class="margin20 make-flex-column">
+        <h3 class="blue">Rock Paper Scissors</h3>
+        <p>Select either Rock, Paper or Scissors to play.  First to five wins!</p>
+      </div>
+      
+    </div>
+    <div id="header-div" class="row twelve columns make-flex-column">
+      <div  class="twelve columns margin5 make-flex-row" >
+        <button id="rock" name="rock" type="button" class="">Rock</button>
+        <button id="paper" name="paper" type="button" class="flex-child-sizing">Paper</button>
+        <button id="scissors" name="scissors" type="button"  class="flex-child-sizing">Scissors</button>
+      </div>
+    </div>
+    <div class="row twelve columns">
+      <div class="twelve columns margin5 make-flex-column">
+        <!--<p id="countdown" class="" >countdownPlaceholder</p>
+        -->
+          <p id="message" class="msg" ></p>
+          <div class="twelve columns make-flex-row">
+            <p id="player-score" class="msg"></p>
+            <p id="computer-score" class="msg margin-left"></p>
+          </div>
+           <p id="final-msg" class="msg-one"></p>
+      </div>
+    </div>
+    
+      
 
-  </main>
-
-  <script>
-
-    function game() {
-      alert(`We\'ll play 'best of five'`)
-      let tie = 0;
-      let playerWins = 0;
-      let computerWins = 0;
-      let i = 5;
-      while (i > 0) {
-        let msgRound = singleRound()
-        if (msgRound.match(/win/i)) {
-          playerWins++;
-        }
-        else if (msgRound.match(/lose/i)) {
-          computerWins++;
-        }
-        else if (msgRound.match(/tie/i)) {
-          tie++;
-        }
-        let msgUpdate = `${msgRound} 
-                    Current score is..
-                    Player: ${playerWins} 
-                    Computer: ${computerWins} 
-                    Ties: ${tie}
-                    ${i - 1} rounds to go.`
-        alert(msgUpdate)
-        i--
-      }
-
-      let msgFinal = finalCount(computerWins, playerWins)
-
-      alert(`${msgFinal}
-                    Player: ${playerWins} 
-                    Computer: ${computerWins} 
-                    Ties: ${tie}`);
-      return `${msgFinal}
-                    Player: ${playerWins} 
-                    Computer: ${computerWins} 
-                    Ties: ${tie}`;
-    }
-
-    function finalCount(computer, player) {
-      if (computer === player) {
-        return `Tie!  Final score is..`
-      }
-      else if (computer > player) {
-        return `You Lose!  Final score is..`
-      }
-      else {
-        return `You Win!  Final score is..`
-      }
-    }
-
-    function singleRound() {
-      let playerSelection = prompt('Let\'s play. Please enter "Rock, Paper or Scissors"');
-      let computerSelection = determineComputerPlay();
-
-      playerSelection = checkPlayerInput(playerSelection);
-      playerSelection = playerSelection.toLowerCase()
-
-      let msg = decideWinner(computerSelection, playerSelection);
-      return msg;
-    }
-
-    function determineComputerPlay() {
-      let computerOption = ['rock', 'paper', 'scissors'];
-      let x = computerOption[Math.floor(Math.random() * computerOption.length)];
-      return x;
-    }
-
-    function checkPlayerInput(str) {
-      let value = false;
-      if (str.match(/^rock$/i) ||
-        str.match(/^paper$/i) ||
-        str.match(/^scissors$/i)) {
-        return str;
-      }
-      else {
-        while (!value) {
-          str = prompt('That\'s not an option! Please enter "Rock, Paper or Scissors".')
-          if (str.match(/^rock$/i) ||
-            str.match(/^paper$/i) ||
-            str.match(/^scissors$/i)) { value = true };
-        }
-      }
-      return str
-    }
-
-    function decideWinner(computer, player) {
-      if (player === 'paper' &
-        computer === 'rock') {
-        return `You Win! ${player} covers ${computer}. `;
-      }
-      if (player === 'rock' &
-        computer === 'scissors') {
-        return `You Win! ${player} crushes ${computer}. `;
-      }
-      if (player === 'scissors' &
-        computer === 'paper') {
-        return `You Win! ${player} cuts ${computer}. `;
-      }
-      if (computer === 'paper' &
-        player === 'rock') {
-        return `You Lose! ${computer} covers ${player}. `
-      }
-      if (computer === 'rock' &
-        player === 'scissors') {
-        return `You Lose! ${computer} crushes ${player}. `
-      }
-      if (computer === 'scissors' &
-        player === 'paper') {
-        return `You Lose! ${computer} cuts ${player}. `
-      }
-      else {
-        return 'It\'s a tie! '
-      }
-    }
-
-  </script>
+      
+        
+      
+  <script type="text/javascript" src="scripts.js"></script>
 </body>
 
 </html>
